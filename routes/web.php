@@ -10,7 +10,7 @@ use App\Http\Controllers\FlightController;
 use App\Http\Controllers\AircraftController;
 use App\Http\Controllers\AirlineController;
 use App\Http\Controllers\AirlineMembershipController;
-
+Use App\Http\Controllers\LoungeController;
 
 Route::get('/auth/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/auth/register', [RegisterController::class, 'store']);
@@ -31,6 +31,9 @@ Route::get('/user/flights/view/{flight}', [FlightController::class, 'view'])->na
 Route::match(['GET', 'POST'], '/fleetmanager', [AircraftController::class, 'index'])->name('fleetmanager');
 Route::get('/fleetmanager/view/{aircraft}', [AircraftController::class, 'view'])->name('viewaircraft');
 Route::match(['GET', 'POST'], '/fleetmanager/edit/{aircraft}', [AircraftController::class, 'edit'])->name('editaircraft')->middleware(['role:Manager']);
+
+Route::get('/lounge', [LoungeController::class, 'index'])->name('userlounge');
+
 
 Route::get('/', function () {
     return view('home.index');

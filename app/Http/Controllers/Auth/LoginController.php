@@ -28,12 +28,14 @@ class LoginController extends Controller
              return back()->with('status', 'Invalid login details');
         }
 
+        // If the user is new and has no airlines yet, redirect him to the lobby.
+        if(auth()->user()->airlines()->count() == 0) {
+            return redirect()->route('userlounge');
+        }
+
         // Set the first airline found for the user in the DB as the active airline.
-        // FIXME/TODO: What to do if no airline exists??
         $firstAirlineFound = auth()->user()->airlines()->first();
 
-        //$firstAirlineFound = AirlineMembership::where('user_id', '=', auth()->user()->id)->first();
-        
         $request->session()->put('activeairline', $firstAirlineFound);
 
         return redirect()->route('dashboard');
